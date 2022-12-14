@@ -35,8 +35,8 @@ function findElement(arr, value) {
  *    2 => [ 1, 3 ]
  *    5 => [ 1, 3, 5, 7, 9 ]
  */
-function generateOdds(/* len */) {
-  throw new Error('Not implemented');
+function generateOdds(len) {
+  return new Array(len).fill(1).map((el, idx) => idx * 2 + el);
 }
 
 
@@ -233,8 +233,8 @@ function toArrayOfSquares(arr) {
  *   [ 0, 0, 0, 0, 0]         => [ 0, 0, 0, 0, 0]
  *   [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] => [ 1, 3, 6, 10, 15, 21, 28, 36, 45, 55 ]
  */
-function getMovingSum(/* arr */) {
-  throw new Error('Not implemented');
+function getMovingSum(arr) {
+  return arr.map((_, idx, array) => array.slice(0, idx + 1).reduce((acc, curr) => acc + curr, 0));
 }
 
 /**
@@ -249,7 +249,7 @@ function getMovingSum(/* arr */) {
  * [ "a" ] => []
  */
 function getSecondItems(arr) {
-  return arr.filter((el, idx) => idx % 2 !== 0);
+  return arr.filter((_, idx) => idx % 2 !== 0);
 }
 
 
@@ -320,8 +320,9 @@ function getPositivesCount(arr) {
  *   [ 'nine','eight','nine','eight'] => [ 'eight','eight','nine','nine']
  *   [ 'one','one','one','zero' ]     => [ 'zero','one','one','one' ]
  */
-function sortDigitNamesByNumericOrder(/* arr */) {
-  throw new Error('Not implemented');
+function sortDigitNamesByNumericOrder(arr) {
+  const numbers = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+  return arr.sort((a, b) => numbers.indexOf(a) - numbers.indexOf(b));
 }
 
 /**
@@ -416,8 +417,13 @@ function toStringList(arr) {
  *      { country: 'Russia',  city: 'Saint Petersburg' }
  *    ]
  */
-function sortCitiesArray(/* arr */) {
-  throw new Error('Not implemented');
+function sortCitiesArray(arr) {
+  function stringSort(str1, str2) {
+    if (str1 < str2) return -1;
+    if (str1 > str2) return 1;
+    return 0;
+  }
+  return arr.sort((a, b) => stringSort(a.country, b.country) || stringSort(a.city, b.city));
 }
 
 /**
@@ -438,8 +444,12 @@ function sortCitiesArray(/* arr */) {
  *           [0,0,0,1,0],
  *           [0,0,0,0,1]]
  */
-function getIdentityMatrix(/* n */) {
-  throw new Error('Not implemented');
+function getIdentityMatrix(n) {
+  const initArr = new Array(n).fill(new Array(n).fill(0));
+  return initArr.map((el, idx) => el.map((innerEl, innerIdx) => {
+    if (innerIdx === idx) return 1;
+    return innerEl;
+  }));
 }
 
 /**
@@ -562,8 +572,10 @@ function getElementByIndexes(arr, indexes) {
  *   [ 1, 2, 3, 4, 5, 6, 7, 8 ]   =>  [ 5, 6, 7, 8, 1, 2, 3, 4 ]
  *
  */
-function swapHeadAndTail(/* arr */) {
-  throw new Error('Not implemented');
+function swapHeadAndTail(arr) {
+  return [...arr.slice(Math.ceil(arr.length / 2), arr.length),
+    ...arr.slice(Math.floor(arr.length / 2), Math.ceil(arr.length / 2)),
+    ...arr.slice(0, Math.floor(arr.length / 2))];
 }
 
 
