@@ -413,8 +413,20 @@ function getCommonDirectoryPath(pathes) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  const result = [];
+  for (let i = 0; i < m1.length; i += 1) {
+    const row = [];
+    for (let j = 0; j < m2[0].length; j += 1) {
+      let c = 0;
+      for (let r = 0; r < m1[0].length; r += 1) {
+        c += m1[i][r] * m2[r][j];
+      }
+      row.push(c);
+    }
+    result.push(row);
+  }
+  return result;
 }
 
 
@@ -448,10 +460,51 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
-}
+function evaluateTicTacToePosition(position) {
+  const players = ['X', '0'];
+  const size = position.length;
+  let line = '';
+  let checkResult;
 
+  function getLineWinner(chkLine) {
+    if (chkLine.length === size) {
+      for (let p = 0; p < players.length; p += 1) {
+        const regex = new RegExp(players[p], 'g');
+        if (chkLine.match(regex)
+        && chkLine.match(regex).length === size) return players[p];
+      }
+    }
+    return undefined;
+  }
+  // check horizontal lines
+  for (let i = 0; i < position[0].length; i += 1) {
+    line = position[i].join('');
+    checkResult = getLineWinner(line);
+    if (checkResult) return checkResult;
+  }
+  // check vertical lines
+  for (let i = 0; i < position[0].length; i += 1) {
+    line = '';
+    for (let j = 0; j < size; j += 1) {
+      line += position[j][i];
+    }
+    checkResult = getLineWinner(line);
+    if (checkResult) return checkResult;
+  }
+  // check diagonals
+  let d1 = '';
+  let d2 = '';
+  for (let d = 0; d < size; d += 1) {
+    d1 += position[d][d];
+    d2 += position[d][size - 1 - d];
+  }
+  checkResult = getLineWinner(d1);
+  if (checkResult) return checkResult;
+  checkResult = getLineWinner(d2);
+  if (checkResult) return checkResult;
+
+  return undefined;
+}
 
 module.exports = {
   getFizzBuzz,
